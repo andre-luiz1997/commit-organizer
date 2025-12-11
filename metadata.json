@@ -1,0 +1,5 @@
+{
+  "name": "Organizador de Commits",
+  "description": "Uma aplicação para conectar a um repositório GitHub, analisar e organizar commits semânticos. Filtre, pesquise e ordene commits com facilidade para entender o histórico do seu projeto.",
+  "requestFramePermissions": []
+}

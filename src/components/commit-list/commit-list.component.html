@@ -1,0 +1,76 @@
+<div class="space-y-0">
+  @if (commits().length > 0) {
+    <div class="flow-root">
+      <ul role="list" class="-mb-8">
+        @for (commit of commits(); track commit.hash; let isLast = $last) {
+          <li>
+            <div class="relative pb-8">
+              @if(!isLast) {
+                <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+              }
+              <div class="relative flex items-start space-x-3">
+                <div>
+                  <div class="relative px-1">
+                    <div class="h-8 w-8 bg-gray-50 rounded-full ring-8 ring-white flex items-center justify-center">
+                      <div class="h-4 w-4 rounded-full bg-gray-200 border-2 border-white"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 py-1.5">
+                  <div class="flex justify-between items-start">
+                    <div class="min-w-0 flex-1">
+                      <div class="text-base text-gray-800">
+                        @if (commit.type) {
+                          @let details = getTypeDetails(commit.type);
+                          <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-md text-xs font-medium" [class]="details.color">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                               <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="details.icon" />
+                             </svg>
+                            {{ details.text }}
+                          </span>
+                        }
+                        @if (commit.scope) {
+                          <span class="ml-1 py-1 px-2.5 rounded-md text-xs font-medium bg-gray-100 text-gray-700">{{ commit.scope }}</span>
+                        }
+                        <span class="ml-2 font-medium">{{ commit.subject | emoji }}</span>
+                      </div>
+                      @if(commit.body) {
+                        <p class="mt-2 text-sm text-gray-600 whitespace-pre-wrap">{{ commit.body }}</p>
+                      }
+                      <div class="mt-2 flex items-center gap-3 text-sm text-gray-500">
+                        <div class="flex items-center gap-1.5">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.095a1.23 1.23 0 0 0 .41-1.412A9.992 9.992 0 0 0 10 12a9.992 9.992 0 0 0-6.535 2.493Z" /></svg>
+                          <span>{{ commit.author }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-shrink-0 text-right space-y-1">
+                      <div class="flex items-center gap-2">
+                        <span class="font-mono text-xs text-blue-600">{{ commit.hash }}</span>
+                        <a [href]="commit.html_url" target="_blank" rel="noopener noreferrer" 
+                           class="text-gray-400 hover:text-blue-600 transition-colors p-1 rounded-md hover:bg-gray-100" title="Ver no GitHub">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-4.5 4.5L21 3m0 0h-5.25M21 3v5.25" />
+                          </svg>
+                        </a>
+                      </div>
+                       <p class="text-xs text-gray-400">{{ commit.date | date:'dd MMM, HH:mm' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  } @else {
+    <div class="text-center py-16 px-6 bg-gray-100 rounded-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <h3 class="mt-2 text-lg font-medium text-gray-900">Nenhum commit encontrado</h3>
+      <p class="mt-1 text-sm text-gray-500">Tente ajustar seus filtros para encontrar o que está procurando.</p>
+    </div>
+  }
+</div>
