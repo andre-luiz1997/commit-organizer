@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ng serve",
     "build": "ng build",
-    "build-pages": "ng b --output-path docs --configuration production ",
+    "build-pages": "ng b --output-path docs --base-href \"/commit-organizer/\" && mv ./docs/browser/* ./docs",
     "preview": "ng serve --configuration=production"
   },
   "dependencies": {
